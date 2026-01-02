@@ -1,31 +1,55 @@
 package br.com.SistemaBancario.SistemaBancario.Model;
 
 import br.com.SistemaBancario.SistemaBancario.Exceptions.CPFException;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import java.util.zip.DataFormatException;
 
+@Entity
+@Table(name = "Contas")
 public class Dados_Conta {
 
-    Scanner leitura = new Scanner(System.in);
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String nome;
-    private String CPF;
+    @Column(unique = true)
+    private String cpf;
     private Double renda;
-    private Double saldo;
+    private Double saldo = 0.0;
     private String dataDeNascimento;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "endereco_id",referencedColumnName = "id")
+    private Endereco endereco;
 
     public Dados_Conta(){}
 
     public Dados_Conta(String nome, String CPF, Double renda, String dataDeNascimento,Double saldo) {
         this.nome = nome;
-        this.CPF = CPF;
+        this.cpf = CPF;
         this.renda = renda;
         this.dataDeNascimento = dataDeNascimento;
         this.saldo = saldo;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -37,11 +61,11 @@ public class Dados_Conta {
     }
 
     public String getCPF() {
-        return CPF;
+        return cpf;
     }
 
     public void setCPF(String CPF) {
-        this.CPF = CPF;
+        this.cpf = CPF;
     }
 
     public Double getRenda() {
@@ -69,6 +93,7 @@ public class Dados_Conta {
     }
 
     public void CriarConta() {
+        Scanner leitura = new Scanner(System.in);
         System.out.println("Digite seu nome : [Nome e sobrenome(final)]");
         setNome(leitura.nextLine());
 
@@ -105,6 +130,7 @@ public class Dados_Conta {
     }
 
     public void Depositar(){
+        Scanner leitura = new Scanner(System.in);
         System.out.println("\nQuanto dinheiro deseja depositar em sua conta : ");
         double valor = leitura.nextDouble();
         leitura.nextLine();
@@ -119,6 +145,7 @@ public class Dados_Conta {
     }
 
     public void Sacar(){
+        Scanner leitura = new Scanner(System.in);
         System.out.println("\nDigite o valor que deseja sacar:");
         double valor = leitura.nextDouble();
         leitura.nextLine();
@@ -133,5 +160,9 @@ public class Dados_Conta {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "Nome do titular : " + nome + "|Cpf Cadastrado : " + cpf + "|Saldo atual : " + saldo + "|Renda :" + renda +
+                "|Data de nascimento : " + dataDeNascimento ;
+    }
 }
