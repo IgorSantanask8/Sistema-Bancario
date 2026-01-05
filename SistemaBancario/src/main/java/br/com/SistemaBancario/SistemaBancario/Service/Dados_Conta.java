@@ -1,11 +1,14 @@
-package br.com.SistemaBancario.SistemaBancario.Model;
+package br.com.SistemaBancario.SistemaBancario.Service;
 
 import br.com.SistemaBancario.SistemaBancario.Exceptions.CPFException;
+import br.com.SistemaBancario.SistemaBancario.Model.Endereco;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 @Entity
@@ -22,9 +25,16 @@ public class Dados_Conta {
     private Double renda;
     private Double saldo = 0.0;
     private String dataDeNascimento;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "endereco_id",referencedColumnName = "id")
     private Endereco endereco;
+
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    List<Transacao> historico = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private LinhaCredito linhaCredito;
 
     public Dados_Conta(){}
 
@@ -34,6 +44,10 @@ public class Dados_Conta {
         this.renda = renda;
         this.dataDeNascimento = dataDeNascimento;
         this.saldo = saldo;
+    }
+
+    public List<Transacao> getHistorico() {
+        return historico;
     }
 
     public Endereco getEndereco() {
@@ -139,6 +153,7 @@ public class Dados_Conta {
             System.out.println("Nao e possivel depositar um valor menor ou igual a zero!");
         }else {
             saldo += valor;
+            adicionarTransacao("Deposito", valor);
             System.out.println("Deposito realizado com sucesso!");
             System.out.println("Saldo atualizado $: " + getSaldo());
         }
@@ -156,6 +171,7 @@ public class Dados_Conta {
             System.out.println("Nao e possivel sacar um valor menor ou igual a zero");
         }else{
             setSaldo(saldo -= valor);
+            adicionarTransacao("Saque", valor);
             System.out.println("Saldo atualizado $ : " + getSaldo());
         }
     }
@@ -164,5 +180,35 @@ public class Dados_Conta {
     public String toString() {
         return "Nome do titular : " + nome + "|Cpf Cadastrado : " + cpf + "|Saldo atual : " + saldo + "|Renda :" + renda +
                 "|Data de nascimento : " + dataDeNascimento ;
+    }
+
+    public void adicionarTransacao(String tipo, Double valor){
+        Transacao t = new Transacao(tipo, valor, this);
+        this.historico.add(t);
+    }
+
+    public void adicionarLinhaCredito(Double renda){
+        linhaCredito = new LinhaCredito();
+
+        if(this.linhaCredito == null){
+            this.linhaCredito = new LinhaCredito();
+            this.linhaCredito.setContaLimite(this);
+        }
+        if(renda <= 2000){
+            System.out.println("Sua renda e inferio a 2 mil.");
+            System.out.println("Podemos oferecer 500 reais na linha basica de credito");
+            linhaCredito.setTipo("Basica");
+            linhaCredito.setLimite(500);
+        }else if(renda >= 2000 && renda<= 8000){
+            System.out.println("Sua renda e maior que 2 mil e menor que 8 mil");
+            System.out.println("Podemos oferecer 4000 mil reais na linha premium de credito");
+            linhaCredito.setTipo("Premium");
+            linhaCredito.setLimite(4000);
+        }else if(renda > 8000){
+            System.out.println("Sua linha e maior que 8000 mil reais");
+            System.out.println("Podemos oferecer 10.000 mil reais de linha Ultra");
+            linhaCredito.setTipo("Ultra");
+            linhaCredito.setLimite(10000);
+        }
     }
 }

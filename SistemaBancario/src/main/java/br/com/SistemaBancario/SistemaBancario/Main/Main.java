@@ -1,6 +1,6 @@
 package br.com.SistemaBancario.SistemaBancario.Main;
 
-import br.com.SistemaBancario.SistemaBancario.Model.Dados_Conta;
+import br.com.SistemaBancario.SistemaBancario.Service.Dados_Conta;
 import br.com.SistemaBancario.SistemaBancario.Model.Endereco;
 import br.com.SistemaBancario.SistemaBancario.repository.ContasRepository;
 
@@ -28,11 +28,12 @@ public class Main {
                 ==================MENU================== 
                 1 - Criar conta     |2 - Consultar dados
                 3 - Depositar valor     |4 - Sacar valor
-                5 - Sair
+                5 - Consultar Extrato  |6 - Verificar linha de credito
+                7 - Sair da aplicacao
                 """;
 
         Integer option_menu= -1;
-        while(option_menu!=5){
+        while(option_menu!=7){
             System.out.println(menu);
             option_menu = leitura.nextInt();
             leitura.nextLine();
@@ -41,6 +42,8 @@ public class Main {
                 case 1:
                     Dados_Conta novaConta = new Dados_Conta();
                     novaConta.CriarConta();
+
+                    novaConta.adicionarLinhaCredito(novaConta.getRenda());
 
                     Endereco novoendereco = new Endereco();
                     Endereco enderecoCompleto = novoendereco.CriarEndereco();
@@ -80,7 +83,33 @@ public class Main {
                     }
                     break;
                 case 5:
-                    System.out.println("Saindo ...");
+                    System.out.println("Digite seu cpf para verificar o extrato:");
+                    var cpfLido = leitura.nextLine();
+                    repositorio.findByCpf(cpfLido).ifPresent(c -> {
+                        System.out.println("=====EXTRATO=====");
+                        c.getHistorico().forEach(System.out::println);
+                        System.out.println("Saldo atual : " + c.getSaldo());
+                    });
+                    break;
+                case 6:
+                    System.out.println("Digite seu cpf para avaliacao : ");
+                    var cpfLidoRenda = leitura.nextLine();
+                    System.out.println("Avaliando sua renda...");
+                    Optional<Dados_Conta> contaCredito = repositorio.findByCpf(cpfLidoRenda);
+
+                    if(contaCredito.isPresent()) {
+                        Dados_Conta c = contaCredito.get();
+                        System.out.println("=====LINHA DE CREDITO====");
+                        c.adicionarLinhaCredito(c.getRenda());
+                        System.out.println("Linha de credito atualizada ");
+
+                        repositorio.save(c);
+                    }else{
+                        System.out.println("Cpf nao encontrado");
+                    }
+                    break;
+                case 7:
+                    System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Entrada invalida");

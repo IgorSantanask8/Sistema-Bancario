@@ -3,6 +3,7 @@ package br.com.SistemaBancario.SistemaBancario.Model;
 import br.com.SistemaBancario.SistemaBancario.Exceptions.CEPException;
 import br.com.SistemaBancario.SistemaBancario.Service.ConsumeApi;
 import br.com.SistemaBancario.SistemaBancario.Service.Conversor;
+import br.com.SistemaBancario.SistemaBancario.Service.Dados_Conta;
 import jakarta.persistence.*;
 
 import java.util.Scanner;
