@@ -1,6 +1,6 @@
 package br.com.SistemaBancario.SistemaBancario.repository;
 
-import br.com.SistemaBancario.SistemaBancario.Service.Dados_Conta;
+import br.com.SistemaBancario.SistemaBancario.Model.Dados_Conta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

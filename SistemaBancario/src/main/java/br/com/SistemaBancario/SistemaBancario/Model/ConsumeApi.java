@@ -1,4 +1,4 @@
-package br.com.SistemaBancario.SistemaBancario.Service;
+package br.com.SistemaBancario.SistemaBancario.Model;
 
 import java.io.IOException;
 import java.net.URI;

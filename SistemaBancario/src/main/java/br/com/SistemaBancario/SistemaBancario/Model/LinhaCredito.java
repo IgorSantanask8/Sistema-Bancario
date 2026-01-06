@@ -1,4 +1,4 @@
-package br.com.SistemaBancario.SistemaBancario.Service;
+package br.com.SistemaBancario.SistemaBancario.Model;
 
 import jakarta.persistence.*;
 

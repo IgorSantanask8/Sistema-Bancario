@@ -1,7 +1,6 @@
-package br.com.SistemaBancario.SistemaBancario.Service;
+package br.com.SistemaBancario.SistemaBancario.Model;
 
 import br.com.SistemaBancario.SistemaBancario.Exceptions.CPFException;
-import br.com.SistemaBancario.SistemaBancario.Model.Endereco;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -30,7 +29,7 @@ public class Dados_Conta {
     @JoinColumn(name = "endereco_id",referencedColumnName = "id")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     List<Transacao> historico = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)

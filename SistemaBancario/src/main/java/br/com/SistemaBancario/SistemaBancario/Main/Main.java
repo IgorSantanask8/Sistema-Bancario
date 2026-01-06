@@ -1,9 +1,12 @@
 package br.com.SistemaBancario.SistemaBancario.Main;
 
-import br.com.SistemaBancario.SistemaBancario.Service.Dados_Conta;
+import br.com.SistemaBancario.SistemaBancario.Model.Dados_Conta;
 import br.com.SistemaBancario.SistemaBancario.Model.Endereco;
 import br.com.SistemaBancario.SistemaBancario.repository.ContasRepository;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationFeature;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +21,7 @@ public class Main {
     private List<Endereco> enderecos = new ArrayList<>();
     private Scanner leitura = new Scanner(System.in);
     private ContasRepository repositorio;
+    private ObjectMapper mapper = new ObjectMapper();
 
     public Main(ContasRepository repositorio) {
         this.repositorio = repositorio;
@@ -50,6 +54,8 @@ public class Main {
 
                     novaConta.setEndereco(enderecoCompleto);
                     repositorio.save(novaConta);
+                    mapper.isEnabled(SerializationFeature.INDENT_OUTPUT);
+                    mapper.writeValue(new File("contas.json"),novaConta);
 
                     System.out.println("Conta e endereco criada com sucesso");
                     break;

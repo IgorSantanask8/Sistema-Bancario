@@ -1,9 +1,6 @@
 package br.com.SistemaBancario.SistemaBancario.Model;
 
 import br.com.SistemaBancario.SistemaBancario.Exceptions.CEPException;
-import br.com.SistemaBancario.SistemaBancario.Service.ConsumeApi;
-import br.com.SistemaBancario.SistemaBancario.Service.Conversor;
-import br.com.SistemaBancario.SistemaBancario.Service.Dados_Conta;
 import jakarta.persistence.*;
 
 import java.util.Scanner;
@@ -43,6 +40,46 @@ public class Endereco {
         this.estado = cepData.estado();
         this.bairro = cepData.bairro();
         this.logradouro = cepData.logradouro();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     @Override

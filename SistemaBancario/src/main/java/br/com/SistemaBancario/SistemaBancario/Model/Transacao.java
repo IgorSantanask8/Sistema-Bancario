@@ -1,5 +1,6 @@
-package br.com.SistemaBancario.SistemaBancario.Service;
+package br.com.SistemaBancario.SistemaBancario.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class Transacao {
     private double valor;
     private LocalDateTime dataTransacao;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "contas_id")
     private Dados_Conta conta;
@@ -28,6 +30,46 @@ public class Transacao {
         this.valor = valor;
         this.conta = conta;
         this.dataTransacao = LocalDateTime.now();
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public LocalDateTime getDataTransacao() {
+        return dataTransacao;
+    }
+
+    public void setDataTransacao(LocalDateTime dataTransacao) {
+        this.dataTransacao = dataTransacao;
+    }
+
+    public Dados_Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Dados_Conta conta) {
+        this.conta = conta;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override
