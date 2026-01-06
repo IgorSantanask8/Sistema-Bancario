@@ -12,7 +12,7 @@ Dentro dos metódos de depósito e saque foram implementados um novo metódo par
 As transações assim como a linha de crédito estão conectadas ao nosso banco de dados.
 
 (v 1.2)
-O projeto foi integrado a uma API REST, utilizando comandos de CRUD para realizar alterações na renda, sacar ou depositar um valor x a uma conta pelo id, CRUDS de get foram usados para exibir uma lista de endereços e transações relacionadas a cada conta, o projeto foi testado manualmente no POSTMAN, em uma futura atualização será feito testes unitários.
+O projeto foi integrado a uma API REST, utilizando comandos de CRUD para realizar alterações na renda, sacar ou depositar um valor x a uma conta pelo id, CRUDS de get foram usados para exibir uma lista de endereços e transações relacionadas a cada conta, atualizar um endereço também está incluso, o projeto foi testado manualmente no POSTMAN, em uma futura atualização será feito testes unitários.
 
 OBSERVAÇÕES ----------------------
 
