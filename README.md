@@ -11,6 +11,9 @@ Utilizando SpringData foi adicionado ao projeto os devidos tratamentos em relaç
 Dentro dos metódos de depósito e saque foram implementados um novo metódo para adicionar um determinado tipo de transação no histórico, ou seja, sempre que uma operação for feita ela será adicionada ao histórico com tipo, valor e tempo real.
 As transações assim como a linha de crédito estão conectadas ao nosso banco de dados.
 
+(v 1.2)
+O projeto foi integrado a uma API REST, utilizando comandos de CRUD para realizar alterações na renda, sacar ou depositar um valor x a uma conta pelo id, CRUDS de get foram usados para exibir uma lista de endereços e transações relacionadas a cada conta, o projeto foi testado manualmente no POSTMAN, em uma futura atualização será feito testes unitários.
+
 OBSERVAÇÕES ----------------------
 
 Projeto ainda sofrera melhorias e novas implementações assim que meus conhecimentos em JAVA evoluirem, poderia usar JPQL para metódos mais avançados, até o momento deixarei como está.
