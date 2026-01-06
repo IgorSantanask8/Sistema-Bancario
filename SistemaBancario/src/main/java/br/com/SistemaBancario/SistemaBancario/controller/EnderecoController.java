@@ -6,10 +6,7 @@ import br.com.SistemaBancario.SistemaBancario.Service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,5 +30,11 @@ public class EnderecoController {
     @GetMapping("/enderecos")
     public List<EnderecoDto> obterTodosEnderecos(){
         return service.obterTodosEnderecos();
+    }
+
+    @PutMapping("/enderecos/alterar/{id}")
+    public ResponseEntity<Optional<Endereco>> alterarEndereco(@PathVariable Long id,@RequestBody Endereco novoEndereco){
+        Optional<Endereco> endereco = service.alterarEndereco(id,novoEndereco);
+        return ResponseEntity.ok(endereco);
     }
 }
